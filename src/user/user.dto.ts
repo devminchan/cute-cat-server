@@ -9,3 +9,17 @@ export class CreateUserDto {
   @Length(8)
   password: string;
 }
+
+export class LoginUserDto {
+  @IsNotEmpty()
+  @Length(4, 40)
+  userId: string;
+
+  @IsNotEmpty()
+  @Length(8)
+  password: string;
+}
+
+export type LoginResult = {
+  token: string;
+}
