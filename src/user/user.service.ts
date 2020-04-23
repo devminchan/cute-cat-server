@@ -30,8 +30,6 @@ export class UserService {
       throw new HttpException(`Can't find user by userid`, 404);
     }
 
-    console.log(loginUserDto.password, user.password);
-
     const isPasswordEquals = await this.authService.comparePassword(
       loginUserDto.password,
       user.password,
@@ -41,8 +39,10 @@ export class UserService {
       throw new HttpException(`Userid and password are not matching`, 403);
     }
 
+    const jwt = await this.authService.genAuthToken(user);
+
     return {
-      token: 'Login success!',
+      token: jwt
     };
   }
 }
