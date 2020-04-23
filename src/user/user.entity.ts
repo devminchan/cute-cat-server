@@ -1,8 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { TimestampEntity } from 'src/utils/timestamp.entity';
 
 @Entity({ name: 'user' })
-export class User {
-  @PrimaryGeneratedColumn()
+export class User extends TimestampEntity {
+  @PrimaryGeneratedColumn({ name: 'seq_no' })
   seqNo: number;
 
   @Column({ name: 'user_id', length: 40, nullable: false, unique: true })
