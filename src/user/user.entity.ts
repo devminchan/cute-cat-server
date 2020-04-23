@@ -9,7 +9,7 @@ export class User extends TimestampEntity {
   @Column({ name: 'user_id', length: 40, nullable: false, unique: true })
   userId: string;
 
-  @Column({ name: 'password', length: 40, nullable: false })
+  @Column({ name: 'password', nullable: false })
   password: string;
 
   @Column({ name: 'is_admin', nullable: false, default: false })
