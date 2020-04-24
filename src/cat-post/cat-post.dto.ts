@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsUrl, IsBoolean } from 'class-validator';
+import { IsNotEmpty, IsUrl } from 'class-validator';
 
 export class CreatePostDto {
   @IsNotEmpty()
@@ -16,7 +16,4 @@ export class UpdatePostDto {
   @IsNotEmpty()
   @IsUrl()
   imageUrl: string;
-
-  @IsBoolean()
-  isPublished: boolean;
 }

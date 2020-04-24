@@ -13,8 +13,8 @@ export class CatPost extends TimestampEntity {
   @Column({ name: 'image_url', nullable: false })
   imageUrl: string;
 
-  @Column({ name: 'is_published', nullable: false, default: false })
-  isPublished: boolean;
+  @Column({ name: 'post_url', nullable: true })
+  postUrl: string;
 
   @ManyToOne(
     () => User,

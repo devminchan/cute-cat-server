@@ -35,7 +35,6 @@ export class CatPostService {
 
     post.content = updatePostDto.content;
     post.imageUrl = updatePostDto.imageUrl;
-    post.isPublished = updatePostDto.isPublished;
 
     return await this.catPostRepository.save(post);
   }
@@ -64,6 +63,18 @@ export class CatPostService {
       )
       .toPromise();
 
-    return result;
+    const postId = result.data['post_id'];
+
+    const postUrlResult = await this.http
+      .get(
+        `${graphUrl}/${postId}?access_token=${accessToken}&fields=permalink_url`,
+      )
+      .toPromise();
+
+    const postUrl = postUrlResult.data['permalink_url'];
+
+    catPost.postUrl = postUrl;
+
+    return await this.catPostRepository.save(catPost);
   }
 }
