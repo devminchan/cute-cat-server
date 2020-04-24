@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { TimestampEntity } from 'src/utils/timestamp.entity';
+import { CatPost } from 'src/cat-post/cat-post.entity';
 
 @Entity({ name: 'user' })
 export class User extends TimestampEntity {
@@ -14,4 +15,10 @@ export class User extends TimestampEntity {
 
   @Column({ name: 'is_admin', nullable: false, default: false })
   isAdmin: boolean;
+
+  @OneToMany(
+    () => CatPost,
+    catPost => catPost.user,
+  )
+  posts: CatPost[];
 }

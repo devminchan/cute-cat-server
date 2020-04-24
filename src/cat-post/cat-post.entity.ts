@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { TimestampEntity } from 'src/utils/timestamp.entity';
+import { User } from 'src/user/user.entity';
 
 @Entity()
 export class CatPost extends TimestampEntity {
@@ -11,4 +12,11 @@ export class CatPost extends TimestampEntity {
 
   @Column({ name: 'image_url', nullable: false })
   imageUrl: string;
+
+  @ManyToOne(
+    () => User,
+    user => user.posts,
+    { onDelete: 'CASCADE', nullable: false },
+  )
+  user: User;
 }
