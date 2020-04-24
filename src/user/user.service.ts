@@ -8,6 +8,10 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
+  async findOne(userSeqNo: number) {
+    return this.userRepository.findOne(userSeqNo);
+  }
+
   async createUser(createUserDto: CreateUserDto) {
     const newUser = this.userRepository.create({
       userId: createUserDto.userId,
@@ -28,9 +32,7 @@ export class UserService {
     const user = await this.userRepository.findOne(seqNo);
     user.password = await bcrypt.hash(updateUserDto.password, 10);
 
-    await this.userRepository.save(user);
-
-    return user;
+    return await this.userRepository.save(user);
   }
 
   async deleteUser(seqNo: number) {
