@@ -7,6 +7,9 @@ import {
   Delete,
   Request,
   UseGuards,
+  Get,
+  HttpException,
+  NotFoundException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
@@ -15,6 +18,18 @@ import { AuthGuard } from '@nestjs/passport';
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @UseGuards(AuthGuard())
+  @Get('/me')
+  async getUserInfo(@Request() req) {
+    const user = await this.userService.findByUserId(req.user.userId);
+
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    return user;
+  }
 
   @Post()
   async register(@Body() createUserDto: CreateUserDto) {
