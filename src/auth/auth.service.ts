@@ -30,11 +30,14 @@ export class AuthService {
     return user;
   }
 
-  async login(user: Pick<User, 'userId' | 'isAdmin'>): Promise<LoginResult> {
+  async login(
+    user: Pick<User, 'seqNo' | 'userId' | 'isAdmin'>,
+  ): Promise<LoginResult> {
     const payloadUser = {
+      seqNo: user.seqNo,
       userId: user.userId,
       isAdmin: user.isAdmin,
-    } as Pick<User, 'userId' | 'isAdmin'>;
+    };
 
     return {
       token: await this.jwtService.signAsync({
