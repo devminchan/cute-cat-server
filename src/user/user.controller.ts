@@ -2,13 +2,12 @@ import {
   Controller,
   Post,
   Body,
-  InternalServerErrorException,
-  Put,
   Delete,
   Request,
   UseGuards,
   Get,
   NotFoundException,
+  Patch,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
@@ -21,7 +20,7 @@ export class UserController {
   @UseGuards(AuthGuard())
   @Get('/me')
   async getUserInfo(@Request() req) {
-    const user = await this.userService.findByUserId(req.user.userId);
+    const user = await this.userService.findOne(req.user.seqNo);
 
     if (!user) {
       throw new NotFoundException();
@@ -35,17 +34,19 @@ export class UserController {
     try {
       return await this.userService.createUser(createUserDto);
     } catch (e) {
-      throw new InternalServerErrorException(e);
+      console.error(e);
+      throw e;
     }
   }
 
   @UseGuards(AuthGuard())
-  @Put('/me')
+  @Patch('/me')
   async update(@Request() req, @Body() updateUserDto: UpdateUserDto) {
     try {
       return await this.userService.updateUser(req.user.seqNo, updateUserDto);
     } catch (e) {
-      throw new InternalServerErrorException(e);
+      console.error(e);
+      throw e;
     }
   }
 
@@ -62,6 +63,7 @@ export class UserController {
         message: 'success',
       };
     } catch (e) {
+      console.error(e);
       throw e;
     }
   }
