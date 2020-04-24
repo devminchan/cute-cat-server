@@ -68,4 +68,15 @@ export class CatPostController {
       throw e;
     }
   }
+
+  @UseGuards(AuthGuard(), AdminGuard)
+  @Patch('/:seqNo/publish')
+  async publishPost(@Param('seqNo') seqNo: number) {
+    try {
+      return this.catPostService.publishPost(seqNo);
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
 }

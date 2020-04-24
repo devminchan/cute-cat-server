@@ -1,13 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
 import { CatPostRepository } from './cat-post.repository';
 import { CreatePostDto, UpdatePostDto } from './cat-post.dto';
 import { UserService } from 'src/user/user.service';
+import { UtilsService } from 'src/utils/utils.service';
 
 @Injectable()
 export class CatPostService {
   constructor(
     private readonly catPostRepository: CatPostRepository,
     private readonly userService: UserService,
+    private readonly utilsService: UtilsService,
+    private readonly http: HttpService,
   ) {}
 
   async findAll() {
@@ -41,5 +44,26 @@ export class CatPostService {
     await this.catPostRepository.delete({
       seqNo,
     });
+  }
+
+  async publishPost(seqNo: number) {
+    const catPost = await this.catPostRepository.findOneOrFail(seqNo);
+    const accessToken = await this.utilsService.getValueByKey(
+      'facebook-page-token',
+    );
+
+    const graphUrl = 'https://graph.facebook.com/';
+
+    console.log('image url', catPost.imageUrl);
+    console.log('content', catPost.content);
+    console.log('token', accessToken);
+
+    const result = await this.http
+      .post(
+        `${graphUrl}me/photos?access_token=${accessToken}&url=${catPost.imageUrl}&message=${catPost.content}`,
+      )
+      .toPromise();
+
+    return result;
   }
 }
