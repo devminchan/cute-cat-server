@@ -19,7 +19,3 @@ export class LoginUserDto {
   @Length(8)
   password: string;
 }
-
-export type LoginResult = {
-  token: string;
-}
