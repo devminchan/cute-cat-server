@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { User } from './user.entity';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
@@ -29,17 +29,18 @@ export class UserService {
   }
 
   async updateUser(seqNo: number, updateUserDto: UpdateUserDto) {
-    const user = await this.userRepository.findOne(seqNo);
+    const user = await this.userRepository.findOneOrFail({
+      seqNo,
+    });
+
     user.password = await bcrypt.hash(updateUserDto.password, 10);
 
     return await this.userRepository.save(user);
   }
 
   async deleteUser(seqNo: number) {
-    const result = await this.userRepository.delete(seqNo);
-
-    if (result.affected == 0) {
-      throw new NotFoundException();
-    }
+    await this.userRepository.delete({
+      seqNo,
+    });
   }
 }
