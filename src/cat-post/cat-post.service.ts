@@ -53,10 +53,6 @@ export class CatPostService {
 
     const graphUrl = 'https://graph.facebook.com/';
 
-    console.log('image url', catPost.imageUrl);
-    console.log('content', catPost.content);
-    console.log('token', accessToken);
-
     const result = await this.http
       .post(
         `${graphUrl}me/photos?access_token=${accessToken}&url=${catPost.imageUrl}&message=${catPost.content}`,
