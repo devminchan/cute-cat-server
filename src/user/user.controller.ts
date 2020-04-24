@@ -6,7 +6,6 @@ import {
   Request,
   UseGuards,
   Get,
-  NotFoundException,
   Patch,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -21,10 +20,6 @@ export class UserController {
   @Get('/me')
   async getUserInfo(@Request() req) {
     const user = await this.userService.findOne(req.user.seqNo);
-
-    if (!user) {
-      throw new NotFoundException();
-    }
 
     return user;
   }

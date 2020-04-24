@@ -7,6 +7,7 @@ import {
   Get,
   Patch,
   Param,
+  Delete,
 } from '@nestjs/common';
 import { CatPostService } from './cat-post.service';
 import { CreatePostDto, UpdatePostDto } from './cat-post.dto';
@@ -46,6 +47,22 @@ export class CatPostController {
   ) {
     try {
       return this.catPostService.updatePost(seqNo, updatePostDto);
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+
+  @UseGuards(AuthGuard(), AdminGuard)
+  @Delete('/:seqNo')
+  async deletePost(@Param('seqNo') seqNo: number) {
+    try {
+      this.catPostService.deletePost(seqNo);
+
+      return {
+        statusCode: 200,
+        message: 'success',
+      };
     } catch (e) {
       console.error(e);
       throw e;

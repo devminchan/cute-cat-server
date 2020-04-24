@@ -36,4 +36,10 @@ export class CatPostService {
 
     return await this.catPostRepository.save(post);
   }
+
+  async deletePost(seqNo: number) {
+    await this.catPostRepository.delete({
+      seqNo,
+    });
+  }
 }

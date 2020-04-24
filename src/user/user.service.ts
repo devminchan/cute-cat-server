@@ -9,7 +9,7 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async findOne(userSeqNo: number) {
-    return await this.userRepository.findOne({ seqNo: userSeqNo });
+    return await this.userRepository.findOneOrFail({ seqNo: userSeqNo });
   }
 
   async createUser(createUserDto: CreateUserDto) {
