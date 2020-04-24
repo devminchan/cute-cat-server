@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { User } from './user.entity';
 import { CreateUserDto } from './user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -12,6 +13,9 @@ export class UserService {
       userId: createUserDto.userId,
       password: createUserDto.password,
     });
+
+    const encodedPassword = await bcrypt.hash(newUser.password, 10);
+    newUser.password = encodedPassword;
 
     return this.userRepository.save(newUser);
   }
