@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CatPostRepository } from './cat-post.repository';
-import { CreatePostDto } from './cat-post.dto';
+import { CreatePostDto, UpdatePostDto } from './cat-post.dto';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
@@ -23,5 +23,17 @@ export class CatPostService {
     });
 
     return await this.catPostRepository.save(newPost);
+  }
+
+  async updatePost(seqNo: number, updatePostDto: UpdatePostDto) {
+    const post = await this.catPostRepository.findOneOrFail({
+      seqNo,
+    });
+
+    post.content = updatePostDto.content;
+    post.imageUrl = updatePostDto.imageUrl;
+    post.isPublished = updatePostDto.isPublished;
+
+    return await this.catPostRepository.save(post);
   }
 }
