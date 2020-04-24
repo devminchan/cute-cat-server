@@ -10,6 +10,10 @@ export class CatPostService {
     private readonly userService: UserService,
   ) {}
 
+  async findAll() {
+    return await this.catPostRepository.find({});
+  }
+
   async createPost(userSeqNo: number, createPostDto: CreatePostDto) {
     const user = await this.userService.findOne(userSeqNo);
 
