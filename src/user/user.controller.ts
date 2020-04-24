@@ -8,7 +8,6 @@ import {
   Request,
   UseGuards,
   Get,
-  HttpException,
   NotFoundException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -59,7 +58,7 @@ export class UserController {
       await this.userService.deleteUser(req.user.seqNo);
 
       return {
-        status: '200',
+        statusCode: '200',
         message: 'success',
       };
     } catch (e) {
