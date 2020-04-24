@@ -32,7 +32,9 @@ export class AuthService {
 
   async login(user: Pick<User, 'userId' | 'isAdmin'>): Promise<LoginResult> {
     return {
-      token: await this.jwtService.signAsync(user),
+      token: await this.jwtService.signAsync({
+        ...user,
+      }),
     };
   }
 }
