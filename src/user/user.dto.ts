@@ -9,3 +9,9 @@ export class CreateUserDto {
   @Length(8)
   password: string;
 }
+
+export class UpdateUserDto {
+  @IsNotEmpty()
+  @Length(8)
+  password: string;
+}
