@@ -1,10 +1,10 @@
 module.exports = {
   type: 'mysql',
-  host: 'localhost',
+  host: process.env.DB_HOST || 'localhost',
   port: 3306,
-  username: 'root',
-  password: '1234',
-  database: 'cute_cat',
+  username: process.env.DB_USERNAME || 'root',
+  password: process.env.DB_PASSWORD || '1234',
+  database: process.env.DB_NAME || 'cute_cat',
   synchronize: true,
   entities: ['dist/**/**.entity.js'],
 };
