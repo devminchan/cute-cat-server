@@ -53,9 +53,12 @@ export class CatPostService {
 
     const graphUrl = 'https://graph.facebook.com/';
 
+    // 한글 때문에 request 시 오류 발생함
+    const hangulEncoded = encodeURI(catPost.content);
+
     const result = await this.http
       .post(
-        `${graphUrl}me/photos?access_token=${accessToken}&url=${catPost.imageUrl}&message=${catPost.content}`,
+        `${graphUrl}me/photos?access_token=${accessToken}&url=${catPost.imageUrl}&message=${hangulEncoded}`,
       )
       .toPromise();
 
