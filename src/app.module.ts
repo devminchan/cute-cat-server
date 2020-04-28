@@ -6,9 +6,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { CatPostModule } from './cat-post/cat-post.module';
 import { UtilsModule } from './utils/utils.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UserModule, AuthModule, CatPostModule, UtilsModule],
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot(),
+    UserModule,
+    AuthModule,
+    CatPostModule,
+    UtilsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
