@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsUrl, IsOptional } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreatePostDto {
   @ApiProperty()
@@ -13,12 +13,11 @@ export class CreatePostDto {
 }
 
 export class UpdatePostDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   content: string;
 
-  @ApiProperty()
-  @IsUrl()
+  @ApiPropertyOptional()
   @IsOptional()
   imageUrl: string;
 }
