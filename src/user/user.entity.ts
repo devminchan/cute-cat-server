@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { TimestampEntity } from 'src/utils/timestamp.entity';
 import { CatPost } from 'src/cat-post/cat-post.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'user' })
 export class User extends TimestampEntity {
@@ -10,6 +11,7 @@ export class User extends TimestampEntity {
   @Column({ name: 'user_id', length: 40, nullable: false, unique: true })
   userId: string;
 
+  @Exclude()
   @Column({ name: 'password', nullable: false })
   password: string;
 
