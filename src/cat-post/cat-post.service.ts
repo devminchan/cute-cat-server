@@ -1,4 +1,4 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable, HttpService, BadRequestException } from '@nestjs/common';
 import { CatPostRepository } from './cat-post.repository';
 import { CreatePostDto, UpdatePostDto } from './cat-post.dto';
 import { UserService } from 'src/user/user.service';
@@ -50,6 +50,10 @@ export class CatPostService {
     const accessToken = await this.utilsService.getValueByKey(
       'facebook-page-token',
     );
+
+    if (catPost.postUrl) {
+      throw new BadRequestException('the post is already published!');
+    }
 
     const graphUrl = 'https://graph.facebook.com/';
 
