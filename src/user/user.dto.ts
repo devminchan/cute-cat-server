@@ -1,5 +1,5 @@
 import { Length, IsNotEmpty } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 
 export class CreateUserDto {
   @ApiProperty()
@@ -13,9 +13,4 @@ export class CreateUserDto {
   password: string;
 }
 
-export class UpdateUserDto {
-  @ApiProperty()
-  @IsNotEmpty()
-  @Length(8)
-  password: string;
-}
+export class UpdateUserDto extends PickType(CreateUserDto, ['password']) {}

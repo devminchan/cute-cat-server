@@ -33,8 +33,8 @@ export class CatPostService {
       seqNo,
     });
 
-    post.content = updatePostDto.content;
-    post.imageUrl = updatePostDto.imageUrl;
+    post.content = updatePostDto.content || post.content;
+    post.imageUrl = updatePostDto.imageUrl || post.imageUrl;
 
     return await this.catPostRepository.save(post);
   }
