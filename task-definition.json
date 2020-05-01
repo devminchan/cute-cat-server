@@ -1,0 +1,148 @@
+{
+  "ipcMode": null,
+  "executionRoleArn": "arn:aws:iam::129403376983:role/ecsSecretAccessRole",
+  "containerDefinitions": [
+    {
+      "dnsSearchDomains": null,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "secretOptions": null,
+        "options": {
+          "awslogs-group": "/ecs/cute-cat-server-task-def",
+          "awslogs-region": "ap-northeast-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "entryPoint": null,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "protocol": "tcp",
+          "containerPort": 3000
+        }
+      ],
+      "command": null,
+      "linuxParameters": null,
+      "cpu": 0,
+      "environment": [
+        {
+          "name": "ECS_AVAILABLE_LOGGING_DRIVERS",
+          "value": "[\"json-file\",\"awslogs\"]"
+        }
+      ],
+      "resourceRequirements": null,
+      "ulimits": null,
+      "dnsServers": null,
+      "mountPoints": [],
+      "workingDirectory": null,
+      "secrets": [
+        {
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:129403376983:secret:cute-cat-server/AWS_ACCESS_KEY_ID-hHpHPR",
+          "name": "AWS_ACCESS_KEY_ID"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:129403376983:secret:cute-cat-server/AWS_SECRET_ACCESS_KEY-TEKYy2",
+          "name": "AWS_SECRET_ACCESS_KEY"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:129403376983:secret:cute-cat-server/DB_HOST-oeGCN1",
+          "name": "DB_HOST"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:129403376983:secret:cute-cat-server/DB_NAME-8mQ539",
+          "name": "DB_NAME"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:129403376983:secret:cute-cat-server/DB_PASSWORD-rnOC4Z",
+          "name": "DB_PASSWORD"
+        },
+        {
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:129403376983:secret:cute-cat-server/DB_USERNAME-Zxs0mM",
+          "name": "DB_USERNAME"
+        }
+      ],
+      "dockerSecurityOptions": null,
+      "memory": 512,
+      "memoryReservation": null,
+      "volumesFrom": [],
+      "stopTimeout": null,
+      "image": "129403376983.dkr.ecr.ap-northeast-2.amazonaws.com/devminchan/cute-cat-server:692fe1cd539b928852382e39a55cbe03f60df60e",
+      "startTimeout": null,
+      "firelensConfiguration": null,
+      "dependsOn": null,
+      "disableNetworking": null,
+      "interactive": null,
+      "healthCheck": null,
+      "essential": true,
+      "links": null,
+      "hostname": null,
+      "extraHosts": null,
+      "pseudoTerminal": null,
+      "user": null,
+      "readonlyRootFilesystem": null,
+      "dockerLabels": null,
+      "systemControls": null,
+      "privileged": null,
+      "name": "ccs-run"
+    }
+  ],
+  "placementConstraints": [],
+  "memory": "512",
+  "taskRoleArn": "arn:aws:iam::129403376983:role/ecsTaskExecutionRole",
+  "compatibilities": ["EC2"],
+  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:129403376983:task-definition/cute-cat-server-task-def:12",
+  "family": "cute-cat-server-task-def",
+  "requiresAttributes": [
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.secrets.asm.environment-variables"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.task-iam-role"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.execution-role-ecr-pull"
+    }
+  ],
+  "pidMode": null,
+  "requiresCompatibilities": ["EC2"],
+  "networkMode": "bridge",
+  "cpu": "512",
+  "revision": 12,
+  "status": "ACTIVE",
+  "inferenceAccelerators": null,
+  "proxyConfiguration": null,
+  "volumes": []
+}
