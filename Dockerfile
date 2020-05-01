@@ -1,5 +1,6 @@
 FROM node:10.13.0-alpine
 # Create Directory for the Container
+RUN npm config set unsafe-perm true
 RUN npm install -g yarn
 
 WORKDIR /home/app
