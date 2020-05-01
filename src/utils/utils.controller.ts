@@ -10,11 +10,14 @@ import { UtilsService } from './utils.service';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { SetFacebookTokenDto, UploadImageDto } from './utils.dto';
 
 @Controller('utils')
 export class UtilsController {
   constructor(private readonly utilsService: UtilsService) {}
 
+  @ApiBody({ type: SetFacebookTokenDto })
   @UseGuards(AuthGuard(), AdminGuard)
   @Post('/facebook/page-token')
   async setPageToken(@Body('token') token: string) {
@@ -26,6 +29,8 @@ export class UtilsController {
     return result;
   }
 
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: UploadImageDto })
   @Post('/resources')
   @UseInterceptors(FileInterceptor('image'))
   async uploadFile(@Req() req) {

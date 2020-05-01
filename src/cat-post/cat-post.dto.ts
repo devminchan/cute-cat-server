@@ -1,19 +1,23 @@
-import { IsNotEmpty, IsUrl } from 'class-validator';
+import { IsNotEmpty, IsUrl, IsOptional } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreatePostDto {
+  @ApiProperty()
   @IsNotEmpty()
   content: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsUrl()
   imageUrl: string;
 }
 
 export class UpdatePostDto {
-  @IsNotEmpty()
+  @ApiPropertyOptional()
+  @IsOptional()
   content: string;
 
-  @IsNotEmpty()
-  @IsUrl()
+  @ApiPropertyOptional()
+  @IsOptional()
   imageUrl: string;
 }
