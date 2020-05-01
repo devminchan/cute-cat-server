@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { CatPostModule } from './cat-post/cat-post.module';
 import { UtilsModule } from './utils/utils.module';
 import { ConfigModule } from '@nestjs/config';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -15,5 +16,6 @@ import { ConfigModule } from '@nestjs/config';
     CatPostModule,
     UtilsModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
