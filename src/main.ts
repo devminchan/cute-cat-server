@@ -13,7 +13,10 @@ async function bootstrap() {
      .setTitle('Cute Cat Server')
      .setDescription('The cats API description')
      .setVersion('0.1')
-     .addTag('cats')
+     .addTag('cat-posts')
+     .addTag('users')
+     .addTag('utils')
+     .addTag('auth')
      .build();
 
    const document = SwaggerModule.createDocument(app, options);

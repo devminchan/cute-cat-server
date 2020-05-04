@@ -10,9 +10,10 @@ import { UtilsService } from './utils.service';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SetFacebookTokenDto, UploadImageDto } from './utils.dto';
 
+@ApiTags('utils')
 @Controller('utils')
 export class UtilsController {
   constructor(private readonly utilsService: UtilsService) {}

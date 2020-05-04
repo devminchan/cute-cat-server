@@ -13,8 +13,9 @@ import { CatPostService } from './cat-post.service';
 import { CreatePostDto, UpdatePostDto } from './cat-post.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from '../guards/admin.guard';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('cat-posts')
 @Controller('cat-posts')
 export class CatPostController {
   constructor(private readonly catPostService: CatPostService) {}
