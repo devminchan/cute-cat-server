@@ -10,9 +10,18 @@ import { UtilsService } from './utils.service';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { SetFacebookTokenDto, UploadImageDto } from './utils.dto';
+import { ImageResponse } from './utils.type';
+import { KeyValue } from './keyvalue.entity';
 
+@ApiTags('utils')
 @Controller('utils')
 export class UtilsController {
   constructor(private readonly utilsService: UtilsService) {}
@@ -20,6 +29,10 @@ export class UtilsController {
   @ApiBody({ type: SetFacebookTokenDto })
   @ApiOperation({
     description: '페이스북 페이지 엑세스 토큰 설정',
+  })
+  @ApiResponse({
+    status: 201,
+    type: KeyValue,
   })
   @UseGuards(AuthGuard(), AdminGuard)
   @Post('/facebook/page-token')
@@ -33,9 +46,16 @@ export class UtilsController {
   }
 
   @ApiConsumes('multipart/form-data')
-  @ApiBody({ type: UploadImageDto })
+  @ApiBody({
+    description: 'binary 이미지 파일',
+    type: UploadImageDto,
+  })
   @ApiOperation({
     description: '이미지 업로드',
+  })
+  @ApiResponse({
+    status: 201,
+    type: ImageResponse,
   })
   @Post('/resources')
   @UseInterceptors(FileInterceptor('image'))
@@ -45,7 +65,7 @@ export class UtilsController {
 
     const response = {
       imageUrl: url + fileName,
-    };
+    } as ImageResponse;
 
     return response;
   }

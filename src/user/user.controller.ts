@@ -11,14 +11,21 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger';
+import { User } from './user.entity';
+import { DefaultApiResponse } from 'src/utils/utils.type';
 
+@ApiTags('users')
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @ApiOperation({
     description: '유저 자기 자신의 정보 조회',
+  })
+  @ApiResponse({
+    status: 200,
+    type: User,
   })
   @UseGuards(AuthGuard())
   @Get('/me')
@@ -30,6 +37,10 @@ export class UserController {
 
   @ApiOperation({
     description: '유저 회원가입',
+  })
+  @ApiResponse({
+    status: 201,
+    type: User,
   })
   @Post()
   async register(@Body() createUserDto: CreateUserDto) {
@@ -43,6 +54,10 @@ export class UserController {
 
   @ApiOperation({
     description: '유저정보(비밀번호) 수정',
+  })
+  @ApiResponse({
+    status: 200,
+    type: User,
   })
   @UseGuards(AuthGuard())
   @Patch('/me')
@@ -58,6 +73,10 @@ export class UserController {
   @ApiOperation({
     description: '회원탈퇴(자신)',
   })
+  @ApiResponse({
+    status: 200,
+    type: DefaultApiResponse,
+  })
   @UseGuards(AuthGuard())
   @Delete('/me')
   async delete(@Request() req) {
@@ -67,9 +86,9 @@ export class UserController {
       await this.userService.deleteUser(req.user.seqNo);
 
       return {
-        statusCode: '200',
+        statusCode: 200,
         message: 'success',
-      };
+      } as DefaultApiResponse ;
     } catch (e) {
       console.error(e);
       throw e;

@@ -2,12 +2,15 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { TimestampEntity } from 'src/utils/timestamp.entity';
 import { CatPost } from 'src/cat-post/cat-post.entity';
 import { Exclude } from 'class-transformer';
+import { ApiResponseProperty } from '@nestjs/swagger';
 
 @Entity({ name: 'user' })
 export class User extends TimestampEntity {
+  @ApiResponseProperty()
   @PrimaryGeneratedColumn({ name: 'seq_no' })
   seqNo: number;
 
+  @ApiResponseProperty()
   @Column({ name: 'user_id', length: 40, nullable: false, unique: true })
   userId: string;
 
@@ -15,6 +18,7 @@ export class User extends TimestampEntity {
   @Column({ name: 'password', nullable: false })
   password: string;
 
+  @ApiResponseProperty()
   @Column({ name: 'is_admin', nullable: false, default: false })
   isAdmin: boolean;
 
