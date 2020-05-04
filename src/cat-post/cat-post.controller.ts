@@ -15,6 +15,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from '../guards/admin.guard';
 import { ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger';
 import { CatPost } from './cat-post.entity';
+import { DefaultApiResponse } from '../utils/utils.type';
 
 @ApiTags('cat-posts')
 @Controller('cat-posts')
@@ -25,6 +26,7 @@ export class CatPostController {
     description: '모든 게시물 조회',
   })
   @ApiResponse({
+    status: 200,
     description: '게시물 리스트 응답',
     type: [CatPost],
   })
@@ -41,6 +43,11 @@ export class CatPostController {
   @ApiOperation({
     description: '게시물 생성 (요청시 저장된 이미지 url, 게시물 내용 전달)',
   })
+  @ApiResponse({
+    status: 201,
+    description: '생성된 게시물 응답',
+    type: CatPost,
+  })
   @UseGuards(AuthGuard())
   @Post()
   async createNewPost(@Request() req, @Body() createPostDto: CreatePostDto) {
@@ -54,6 +61,11 @@ export class CatPostController {
 
   @ApiOperation({
     description: '게시물 수정',
+  })
+  @ApiResponse({
+    status: 200,
+    description: '수정된 게시물 응답',
+    type: CatPost,
   })
   @UseGuards(AuthGuard())
   @Patch('/:seqNo')
@@ -72,6 +84,10 @@ export class CatPostController {
   @ApiOperation({
     description: '게시물 삭제',
   })
+  @ApiResponse({
+    status: 200,
+    type: DefaultApiResponse,
+  })
   @UseGuards(AuthGuard())
   @Delete('/:seqNo')
   async deletePost(@Param('seqNo') seqNo: number) {
@@ -81,7 +97,7 @@ export class CatPostController {
       return {
         statusCode: 200,
         message: 'success',
-      };
+      } as DefaultApiResponse;
     } catch (e) {
       console.error(e);
       throw e;
@@ -89,7 +105,13 @@ export class CatPostController {
   }
 
   @ApiOperation({
-    description: '페이스북 페이지에 seqNo에 해당하는 게시물 업로드 (어드민 권한 필요)',
+    description:
+      '페이스북 페이지에 seqNo에 해당하는 게시물 업로드 (어드민 권한 필요)',
+  })
+  @ApiResponse({
+    status: 200,
+    description: '페이지에 업로드후 postUrl이 변경된 게시물 응답',
+    type: CatPost,
   })
   @UseGuards(AuthGuard(), AdminGuard)
   @Patch('/:seqNo/publish')
