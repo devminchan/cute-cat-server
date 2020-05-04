@@ -13,11 +13,15 @@ import { CatPostService } from './cat-post.service';
 import { CreatePostDto, UpdatePostDto } from './cat-post.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from '../guards/admin.guard';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('cat-posts')
 export class CatPostController {
   constructor(private readonly catPostService: CatPostService) {}
 
+  @ApiOperation({
+    description: '모든 게시물 조회',
+  })
   @Get()
   async getAllPosts() {
     try {
@@ -28,6 +32,9 @@ export class CatPostController {
     }
   }
 
+  @ApiOperation({
+    description: '게시물 생성',
+  })
   @UseGuards(AuthGuard())
   @Post()
   async createNewPost(@Request() req, @Body() createPostDto: CreatePostDto) {
@@ -39,6 +46,9 @@ export class CatPostController {
     }
   }
 
+  @ApiOperation({
+    description: '게시물 수정',
+  })
   @UseGuards(AuthGuard())
   @Patch('/:seqNo')
   async updatePost(
@@ -53,6 +63,9 @@ export class CatPostController {
     }
   }
 
+  @ApiOperation({
+    description: '게시물 삭제',
+  })
   @UseGuards(AuthGuard())
   @Delete('/:seqNo')
   async deletePost(@Param('seqNo') seqNo: number) {
@@ -69,6 +82,9 @@ export class CatPostController {
     }
   }
 
+  @ApiOperation({
+    description: '페이스북 페이지에 seqNo에 해당하는 게시물 업로드 (어드민 권한 필요)',
+  })
   @UseGuards(AuthGuard(), AdminGuard)
   @Patch('/:seqNo/publish')
   async publishPost(@Param('seqNo') seqNo: number) {

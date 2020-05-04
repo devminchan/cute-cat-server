@@ -10,7 +10,7 @@ import { UtilsService } from './utils.service';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
 import { SetFacebookTokenDto, UploadImageDto } from './utils.dto';
 
 @Controller('utils')
@@ -18,6 +18,9 @@ export class UtilsController {
   constructor(private readonly utilsService: UtilsService) {}
 
   @ApiBody({ type: SetFacebookTokenDto })
+  @ApiOperation({
+    description: '페이스북 페이지 엑세스 토큰 설정',
+  })
   @UseGuards(AuthGuard(), AdminGuard)
   @Post('/facebook/page-token')
   async setPageToken(@Body('token') token: string) {
@@ -31,6 +34,9 @@ export class UtilsController {
 
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: UploadImageDto })
+  @ApiOperation({
+    description: '이미지 업로드',
+  })
   @Post('/resources')
   @UseInterceptors(FileInterceptor('image'))
   async uploadFile(@Req() req) {
