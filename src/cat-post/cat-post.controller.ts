@@ -39,7 +39,7 @@ export class CatPostController {
     }
   }
 
-  @UseGuards(AuthGuard(), AdminGuard)
+  @UseGuards(AuthGuard())
   @Patch('/:seqNo')
   async updatePost(
     @Param('seqNo') seqNo: number,
@@ -53,7 +53,7 @@ export class CatPostController {
     }
   }
 
-  @UseGuards(AuthGuard(), AdminGuard)
+  @UseGuards(AuthGuard())
   @Delete('/:seqNo')
   async deletePost(@Param('seqNo') seqNo: number) {
     try {
