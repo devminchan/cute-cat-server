@@ -34,7 +34,10 @@ export class UtilsController {
   }
 
   @ApiConsumes('multipart/form-data')
-  @ApiBody({ type: UploadImageDto })
+  @ApiBody({
+    description: 'binary 이미지 파일',
+    type: UploadImageDto,
+  })
   @ApiOperation({
     description: '이미지 업로드',
   })
