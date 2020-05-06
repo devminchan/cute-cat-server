@@ -13,7 +13,7 @@ import { CatPostService } from './cat-post.service';
 import { CreatePostDto, UpdatePostDto } from './cat-post.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from '../guards/admin.guard';
-import { ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiResponse, ApiHeader } from '@nestjs/swagger';
 import { CatPost } from './cat-post.entity';
 import { DefaultApiResponse } from '../utils/utils.type';
 
@@ -40,6 +40,10 @@ export class CatPostController {
     }
   }
 
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer <token>',
+  })
   @ApiOperation({
     description: '게시물 생성 (요청시 저장된 이미지 url, 게시물 내용 전달)',
   })
@@ -59,6 +63,10 @@ export class CatPostController {
     }
   }
 
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer <token>',
+  })
   @ApiOperation({
     description: '게시물 수정',
   })
@@ -81,6 +89,10 @@ export class CatPostController {
     }
   }
 
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer <token>',
+  })
   @ApiOperation({
     description: '게시물 삭제',
   })
@@ -104,6 +116,10 @@ export class CatPostController {
     }
   }
 
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer <token>',
+  })
   @ApiOperation({
     description:
       '페이스북 페이지에 seqNo에 해당하는 게시물 업로드 (어드민 권한 필요)',
