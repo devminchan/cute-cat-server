@@ -11,7 +11,7 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiResponse, ApiHeader } from '@nestjs/swagger';
 import { User } from './user.entity';
 import { DefaultApiResponse } from 'src/utils/utils.type';
 
@@ -20,6 +20,10 @@ import { DefaultApiResponse } from 'src/utils/utils.type';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer <token>',
+  })
   @ApiOperation({
     description: '유저 자기 자신의 정보 조회',
   })
@@ -52,6 +56,10 @@ export class UserController {
     }
   }
 
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer <token>',
+  })
   @ApiOperation({
     description: '유저정보(비밀번호) 수정',
   })
@@ -70,6 +78,10 @@ export class UserController {
     }
   }
 
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer <token>',
+  })
   @ApiOperation({
     description: '회원탈퇴(자신)',
   })
@@ -88,7 +100,7 @@ export class UserController {
       return {
         statusCode: 200,
         message: 'success',
-      } as DefaultApiResponse ;
+      } as DefaultApiResponse;
     } catch (e) {
       console.error(e);
       throw e;
