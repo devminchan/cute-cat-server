@@ -16,7 +16,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from '../guards/admin.guard';
 import { ApiOperation, ApiTags, ApiResponse, ApiHeader } from '@nestjs/swagger';
 import { CatPost } from './cat-post.entity';
-import { DefaultApiResponse } from '../utils/utils.type';
+import { DefaultApiResponse } from '../base/base.types';
 
 @ApiTags('cat-posts')
 @Controller('cat-posts')
@@ -84,7 +84,11 @@ export class CatPostController {
     @Body() updatePostDto: UpdatePostDto,
   ) {
     try {
-      return this.catPostService.updatePost(req.user.seqNo, seqNo, updatePostDto);
+      return this.catPostService.updatePost(
+        req.user.seqNo,
+        seqNo,
+        updatePostDto,
+      );
     } catch (e) {
       console.error(e);
       throw e;
