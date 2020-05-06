@@ -13,7 +13,7 @@ import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags, ApiResponse, ApiHeader } from '@nestjs/swagger';
 import { User } from './user.entity';
-import { DefaultApiResponse } from 'src/utils/utils.type';
+import { DefaultApiResponse } from '../base/base.types';
 
 @ApiTags('users')
 @Controller('users')

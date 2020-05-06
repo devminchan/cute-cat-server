@@ -19,7 +19,7 @@ import {
   ApiHeader,
 } from '@nestjs/swagger';
 import { SetFacebookTokenDto, UploadImageDto } from './utils.dto';
-import { ImageResponse } from './utils.type';
+import { ImageResponse } from './utils.types';
 import { KeyValue } from './keyvalue.entity';
 
 @ApiTags('utils')

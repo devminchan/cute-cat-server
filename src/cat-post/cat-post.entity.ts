@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { TimestampEntity } from 'src/utils/timestamp.entity';
-import { User } from 'src/user/user.entity';
+import { TimestampEntity } from '../utils/timestamp.entity';
+import { User } from '../user/user.entity';
 import { ApiResponseProperty } from '@nestjs/swagger';
 
 @Entity()
@@ -21,10 +21,13 @@ export class CatPost extends TimestampEntity {
   @Column({ name: 'post_url', nullable: true })
   postUrl: string;
 
+  @ApiResponseProperty({
+    type: () => User,
+  })
   @ManyToOne(
     () => User,
     user => user.posts,
-    { onDelete: 'CASCADE', nullable: false },
+    { eager: true, onDelete: 'CASCADE', nullable: false },
   )
   user: User;
 }

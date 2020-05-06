@@ -28,9 +28,16 @@ export class CatPostService {
     return await this.catPostRepository.save(newPost);
   }
 
-  async updatePost(seqNo: number, updatePostDto: UpdatePostDto) {
+  async updatePost(
+    userSeqNo: number,
+    seqNo: number,
+    updatePostDto: UpdatePostDto,
+  ) {
     const post = await this.catPostRepository.findOneOrFail({
       seqNo,
+      user: {
+        seqNo: userSeqNo,
+      },
     });
 
     post.content = updatePostDto.content || post.content;
@@ -39,9 +46,12 @@ export class CatPostService {
     return await this.catPostRepository.save(post);
   }
 
-  async deletePost(seqNo: number) {
+  async deletePost(userSeqNo: number, seqNo: number) {
     await this.catPostRepository.delete({
       seqNo,
+      user: {
+        seqNo: userSeqNo,
+      },
     });
   }
 

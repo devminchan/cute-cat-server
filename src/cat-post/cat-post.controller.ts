@@ -8,6 +8,7 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { CatPostService } from './cat-post.service';
 import { CreatePostDto, UpdatePostDto } from './cat-post.dto';
@@ -15,7 +16,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from '../guards/admin.guard';
 import { ApiOperation, ApiTags, ApiResponse, ApiHeader } from '@nestjs/swagger';
 import { CatPost } from './cat-post.entity';
-import { DefaultApiResponse } from '../utils/utils.type';
+import { DefaultApiResponse } from '../base/base.types';
 
 @ApiTags('cat-posts')
 @Controller('cat-posts')
@@ -78,11 +79,16 @@ export class CatPostController {
   @UseGuards(AuthGuard())
   @Patch('/:seqNo')
   async updatePost(
+    @Req() req,
     @Param('seqNo') seqNo: number,
     @Body() updatePostDto: UpdatePostDto,
   ) {
     try {
-      return this.catPostService.updatePost(seqNo, updatePostDto);
+      return this.catPostService.updatePost(
+        req.user.seqNo,
+        seqNo,
+        updatePostDto,
+      );
     } catch (e) {
       console.error(e);
       throw e;
@@ -102,9 +108,9 @@ export class CatPostController {
   })
   @UseGuards(AuthGuard())
   @Delete('/:seqNo')
-  async deletePost(@Param('seqNo') seqNo: number) {
+  async deletePost(@Req() req, @Param('seqNo') seqNo: number) {
     try {
-      this.catPostService.deletePost(seqNo);
+      this.catPostService.deletePost(req.user.seqNo, seqNo);
 
       return {
         statusCode: 200,

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { TimestampEntity } from 'src/utils/timestamp.entity';
-import { CatPost } from 'src/cat-post/cat-post.entity';
+import { TimestampEntity } from '../utils/timestamp.entity';
+import { CatPost } from '../cat-post/cat-post.entity';
 import { Exclude } from 'class-transformer';
 import { ApiResponseProperty } from '@nestjs/swagger';
 
