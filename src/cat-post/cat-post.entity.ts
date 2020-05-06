@@ -21,10 +21,13 @@ export class CatPost extends TimestampEntity {
   @Column({ name: 'post_url', nullable: true })
   postUrl: string;
 
+  @ApiResponseProperty({
+    type: () => User,
+  })
   @ManyToOne(
     () => User,
     user => user.posts,
-    { onDelete: 'CASCADE', nullable: false },
+    { eager: true, onDelete: 'CASCADE', nullable: false },
   )
   user: User;
 }
