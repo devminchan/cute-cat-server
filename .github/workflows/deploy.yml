@@ -2,6 +2,7 @@ on:
   push: 
     branches: [master]
   pull_request:
+    types: [closed]
     branches: [master]
 
 name: Deploy to Amazon ECS
@@ -12,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Pull request merged
+      if: github.event.pull_request.merged == true
+      run: echo merged
+
     - name: Checkout
       uses: actions/checkout@v2
 
