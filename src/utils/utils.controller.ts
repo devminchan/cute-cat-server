@@ -7,7 +7,7 @@ import {
   Req,
 } from '@nestjs/common';
 import { UtilsService } from './utils.service';
-import { AdminGuard } from 'src/guards/admin.guard';
+import { AdminGuard } from '../guards/admin.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {

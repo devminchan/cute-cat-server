@@ -1,8 +1,8 @@
 import { Injectable, HttpService, BadRequestException } from '@nestjs/common';
 import { CatPostRepository } from './cat-post.repository';
 import { CreatePostDto, UpdatePostDto } from './cat-post.dto';
-import { UserService } from 'src/user/user.service';
-import { UtilsService } from 'src/utils/utils.service';
+import { UserService } from '../user/user.service';
+import { UtilsService } from '../utils/utils.service';
 
 @Injectable()
 export class CatPostService {
