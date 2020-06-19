@@ -1,4 +1,9 @@
-import { Injectable, HttpService, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  HttpService,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CatPostRepository } from './cat-post.repository';
 import { CreatePostDto, UpdatePostDto } from './cat-post.dto';
 import { UserService } from '../user/user.service';
@@ -33,30 +38,48 @@ export class CatPostService {
     seqNo: number,
     updatePostDto: UpdatePostDto,
   ) {
-    const post = await this.catPostRepository.findOneOrFail({
+    const post = await this.catPostRepository.findOne({
       seqNo,
       user: {
         seqNo: userSeqNo,
       },
     });
 
-    post.content = updatePostDto.content || post.content;
-    post.imageUrl = updatePostDto.imageUrl || post.imageUrl;
+    if (!post) {
+      throw new NotFoundException('post not found');
+    }
+
+    if (updatePostDto.content && updatePostDto.content.length > 0) {
+      post.content = updatePostDto.content;
+    }
+
+    if (updatePostDto.imageUrl && updatePostDto.imageUrl.length > 0) {
+      post.imageUrl = updatePostDto.imageUrl;
+    }
 
     return await this.catPostRepository.save(post);
   }
 
   async deletePost(userSeqNo: number, seqNo: number) {
-    await this.catPostRepository.delete({
+    const result = await this.catPostRepository.delete({
       seqNo,
       user: {
         seqNo: userSeqNo,
       },
     });
+
+    if (result.affected <= 0) {
+      throw new BadRequestException('nothing is deleted');
+    }
   }
 
   async publishPost(seqNo: number) {
-    const catPost = await this.catPostRepository.findOneOrFail(seqNo);
+    const catPost = await this.catPostRepository.findOne({ seqNo });
+
+    if (!catPost) {
+      throw new NotFoundException('post not found');
+    }
+
     const accessToken = await this.utilsService.getValueByKey(
       'facebook-page-token',
     );
