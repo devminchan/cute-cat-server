@@ -9,18 +9,20 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.useGlobalPipes(new ValidationPipe());
 
-   const options = new DocumentBuilder()
-     .setTitle('Cute Cat Server')
-     .setDescription('The cats API description')
-     .setVersion('0.1')
-     .addTag('cat-posts')
-     .addTag('users')
-     .addTag('utils')
-     .addTag('auth')
-     .build();
+  app.enableCors();
 
-   const document = SwaggerModule.createDocument(app, options);
-   SwaggerModule.setup('api', app, document);
+  const options = new DocumentBuilder()
+    .setTitle('Cute Cat Server')
+    .setDescription('The cats API description')
+    .setVersion('0.1')
+    .addTag('cat-posts')
+    .addTag('users')
+    .addTag('utils')
+    .addTag('auth')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 }
