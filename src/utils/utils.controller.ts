@@ -16,7 +16,7 @@ import {
   ApiOperation,
   ApiTags,
   ApiResponse,
-  ApiHeader,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { SetFacebookTokenDto, UploadImageDto } from './utils.dto';
 import { ImageResponse } from './utils.types';
@@ -27,10 +27,7 @@ import { KeyValue } from './keyvalue.entity';
 export class UtilsController {
   constructor(private readonly utilsService: UtilsService) {}
 
-  @ApiHeader({
-    name: 'Authorization',
-    description: 'Bearer <token>',
-  })
+  @ApiBearerAuth()
   @ApiBody({ type: SetFacebookTokenDto })
   @ApiOperation({
     description: '페이스북 페이지 엑세스 토큰 설정 (어드민 권한 필요)',
