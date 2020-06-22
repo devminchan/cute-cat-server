@@ -13,7 +13,7 @@ import {
 import { CatPostService } from './cat-post.service';
 import { CreatePostDto, UpdatePostDto } from './cat-post.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { AdminGuard } from '../guards/admin.guard';
+import { AdminGuard } from '../auth/guards/admin.guard';
 import {
   ApiOperation,
   ApiTags,
@@ -21,7 +21,7 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { CatPost } from './cat-post.entity';
-import { DefaultApiResponse } from '../base/base.types';
+import { DefaultApiResponse } from '../base/base.dto';
 
 @ApiTags('cat-posts')
 @Controller('cat-posts')

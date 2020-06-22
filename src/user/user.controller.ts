@@ -18,7 +18,7 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { User } from './user.entity';
-import { DefaultApiResponse } from '../base/base.types';
+import { DefaultApiResponse } from '../base/base.dto';
 
 @ApiTags('users')
 @Controller('users')
