@@ -2,8 +2,7 @@ import { Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger';
-import { LoginRequest } from './auth.dto';
-import { LoginResult } from './auth.types';
+import { LoginRequest, LoginResult } from './auth.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -16,7 +15,7 @@ export class AuthController {
   })
   @ApiResponse({
     status: 201,
-    type: LoginResult
+    type: LoginResult,
   })
   @UseGuards(AuthGuard('local'))
   @Post('login')

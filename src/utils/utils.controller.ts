@@ -7,7 +7,7 @@ import {
   Req,
 } from '@nestjs/common';
 import { UtilsService } from './utils.service';
-import { AdminGuard } from '../guards/admin.guard';
+import { AdminGuard } from '../auth/guards/admin.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
@@ -18,8 +18,11 @@ import {
   ApiResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
-import { SetFacebookTokenDto, UploadImageDto } from './utils.dto';
-import { ImageResponse } from './utils.types';
+import {
+  SetFacebookTokenDto,
+  UploadImageDto,
+  ImageResponse,
+} from './utils.dto';
 import { KeyValue } from './keyvalue.entity';
 
 @ApiTags('utils')

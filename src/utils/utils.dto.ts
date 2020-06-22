@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiResponseProperty } from '@nestjs/swagger';
 
 export class SetFacebookTokenDto {
   @ApiProperty()
@@ -8,4 +8,9 @@ export class SetFacebookTokenDto {
 export class UploadImageDto {
   @ApiProperty({ type: 'string', format: 'binary' })
   image: any;
+}
+
+export class ImageResponse {
+  @ApiResponseProperty()
+  imageUrl: string;
 }
